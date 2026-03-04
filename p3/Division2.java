@@ -5,6 +5,8 @@ public class Division2
 
 static long cont;
 
+//Complejidad a=2 b=2 K=1
+//O(nLogn)
 public static void rec2 (int n)
 {
 	if (n<=0) cont++;
