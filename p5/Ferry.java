@@ -86,6 +86,18 @@ public class Ferry {
     		System.out.printf("\nPossible assignation:\n");
     		for (int i = getMaximumNumberOfVehicles(); i > 0; i--) {
     			//si found es true -> rompo la ejecución
+    			if(found) {
+    				return;
+    			}
+    			for (int j = 0; j < boatlenght; j++) {
+					if(found) {
+						return;
+					}
+					if (j - vehicles.get(i-1) >= 0 && matrix[i][j - vehicles.get(i-1)])  {
+						found=true;
+						processAssignation(i, j);
+					}
+				}
     			//para cada p de la longitud del barco
     			//		si found es true -> rompo la ejecución
     			//		si dp[i][p-v(i)] es true -> found = true; llamo a processAssignation()
@@ -93,15 +105,24 @@ public class Ferry {
     	}
 
     private void processAssignation(int i, int l) {
-    	// if ((i == 0) && (l == 0)) { // llamo a printPath y acabo la ejecución (return)
-    		
-    	//if (dp[i-1][l]) {
-    	//		añado al path (path.addFirst) un nuevo Step llamado estribor; llamo a processAssignation(i-1, l);
+    	 if (i == 0 && l == 0) {
+    	        printPath();
+    	        return;
+    	    }
 
-    		
-    	// if (dp[i-1][l-vehicles.get(i-1)]) {
-    	//		añado al path (path.addFirst) un nuevo Step llamado babor; llamo a processAssignation(i-1, l-vehicles.get(i-1));
+    	    // Estribor (no usar el vehículo)
+    	    if (matrix[i-1][l]) {
+    	        path.addFirst(new Step(i-1, l, i, l, i, "Stribor"));
+    	        processAssignation(i-1, l);
+    	        return;
+    	    }
 
+    	    // Babor (usar el vehículo)
+    	    if (l - vehicles.get(i-1) >= 0 && matrix[i-1][l - vehicles.get(i-1)]) {
+    	        path.addFirst(new Step(i-1, l - vehicles.get(i-1), i, l, i, "Babor"));
+    	        processAssignation(i-1, l - vehicles.get(i-1));
+    	        return;
+    	    }
 
     	}
     	
@@ -158,5 +179,3 @@ public class Ferry {
 
     
 }
-
-
