@@ -47,7 +47,7 @@ public class AlmacenajeContenedores {
                 contenedores.get(i).add(conjuntoS[indexObject]);
                 backTracking(indexObject + 1 , contenedores);
                 //Retroceder-
-                contenedores.get(i).remove(conjuntoS[indexObject]);
+                contenedores.get(i).remove(contenedores.get(i).size()-1);
             }
             
         }
@@ -61,14 +61,14 @@ public class AlmacenajeContenedores {
         
         backTracking(indexObject + 1 , contenedores);
         nuevoContenedro.remove(conjuntoS[indexObject]);
-        contenedores.remove(nuevoContenedro);
+        
             
     }
 
     private List<List<Integer>> crearCopia(List<List<Integer>> contenedores) {
         List<List<Integer>> copia = new ArrayList<List<Integer>>();
         for (List<Integer> i : contenedores) {
-            copia.add(i);
+            copia.add(new ArrayList<Integer>(i));
         }
         return copia;
     }
@@ -98,6 +98,7 @@ public class AlmacenajeContenedores {
 
     void resolve() {
         ArrayList<List<Integer>> contenedores=new ArrayList<>();
+        
         backTracking(0, contenedores);
         
     }
